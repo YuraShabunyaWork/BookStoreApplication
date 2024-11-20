@@ -1,0 +1,13 @@
+﻿@using BookStoreApplication.Models;
+@model List<Book>;
+
+@foreach (var item in Model)
+{
+    <tr>
+        <th scope="row">@item.Id</th>
+        <td>@item.ISBN</td>
+        <td>@item.Title</td>
+        <td>@item.Author</td>
+        <td>@item.Publisher</td>
+    </tr>
+}
