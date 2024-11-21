@@ -7,6 +7,6 @@
         public string Title { get; set; }
         public string Author { get; set; }
         public string Publisher { get; set; }
-        //public List<Description> Descriptions { get; set; }
+        public Description Descriptions { get; set; }
     }
 }

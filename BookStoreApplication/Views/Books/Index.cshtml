@@ -7,28 +7,31 @@
                     type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="d-flex flex-column text-start">
                     <span class="text-muted small">Language</span>
-                    <span>English (US)</span>
+                    <span id="selectedLanguage">English (EN)</span>
                 </div>
             </button>
             <ul class="dropdown-menu w-100" aria-labelledby="languageDropdown">
-                <li><a class="dropdown-item" href="#">English (US)<a></li>
-                <li><a class="dropdown-item" href="#">Germany (GE)</a></li>
-                <li><a class="dropdown-item" href="#">Français </a></li>
+                <li><a class="dropdown-item" href="#" onclick="selectLanguage('English (EN)')">English (EN)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="selectLanguage('Germany (DE)')">Germany (DE)</a></li>
+                <li><a class="dropdown-item" href="#" onclick="selectLanguage('Français (FR)')">Français (FR)</a></li>
             </ul>
         </div>
 
-        <div class="form-floating bg-white" style="width: 18vw">
-            <input type="text" class="form-control" id="floatingInput" placeholder="Seed">
+        <div class="container form-floating bg-white" style="width: 18vw; padding: 0px; margin: 0px;">
+            <input type="text" class="form-control" id="IntegerInput" value="42" placeholder="Seed" oninput="sendDataToServer()">
             <label for="floatingInput">Seed</label>
+            <button type="button" class="bg-white" style="position:absolute; right: 15px; border: unset" onclick="shuffleSeed()">
+                <i class="fa-solid fa-shuffle"></i>
+            </button>
         </div>
         
-        <div class="bg-white" style="width: 18vw">
+        <div style="width: 18vw">
             <label for="likes" class="form-label text-muted small">Likes</label>
-            <input type="range" class="form-range" id="likes" min="0" max="10" step="1">
+            <input type="range" class="form-range" id="likes" min="0" max="10" step="0.5" value="5" oninput="sendDataToServer()">
         </div>
 
         <div class="form-floating bg-white" style="width: 18vw">
-            <input type="number" class="form-control" id="floatingInput" placeholder="Review">
+            <input type="number" class="form-control" id="floatingInput" placeholder="Review" value="4.5" oninput="sendDataToServer()">
             <label for="floatingInput">Review</label>
         </div>
 
@@ -55,7 +58,6 @@
         </thead>
         <tbody id="book-table-body">
             @await Html.PartialAsync("_BookListPartial", Model)
-            <!-- Здесь будут подгружаться строки таблицы -->
         </tbody>
     </table>
 </div>
@@ -63,4 +65,6 @@
 <div id="loading" style="text-align:center; display:none;">Загрузка...</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/SendCofiguration.js"></script>
 <script src="~/js/SkrollPage.js"></script>
+<script src="~/js/ShuffleSeed.js"></script>
