@@ -1,0 +1,66 @@
+﻿@model List<BookStoreApplication.Models.Book>
+
+<div class="container mt-1 bg-light">
+    <nav class="navbar d-flex justify-content-between sticky-top bg-light">
+        <div class="dropdown sticky-top" style="width: 18vw">
+            <button class="btn btn-light dropdown-toggle w-100 d-flex justify-content-between align-items-center bg-white"
+                    type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="d-flex flex-column text-start">
+                    <span class="text-muted small">Language</span>
+                    <span>English (US)</span>
+                </div>
+            </button>
+            <ul class="dropdown-menu w-100" aria-labelledby="languageDropdown">
+                <li><a class="dropdown-item" href="#">English (US)<a></li>
+                <li><a class="dropdown-item" href="#">Germany (GE)</a></li>
+                <li><a class="dropdown-item" href="#">Français </a></li>
+            </ul>
+        </div>
+
+        <div class="form-floating bg-white" style="width: 18vw">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Seed">
+            <label for="floatingInput">Seed</label>
+        </div>
+        
+        <div class="bg-white" style="width: 18vw">
+            <label for="likes" class="form-label text-muted small">Likes</label>
+            <input type="range" class="form-range" id="likes" min="0" max="10" step="1">
+        </div>
+
+        <div class="form-floating bg-white" style="width: 18vw">
+            <input type="number" class="form-control" id="floatingInput" placeholder="Review">
+            <label for="floatingInput">Review</label>
+        </div>
+
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-primary">
+                <i class="fas fa-th"></i>
+            </button>
+
+            <button type="button" class="btn btn-outline-primary">
+                <i class="fas fa-book"></i>
+            </button>
+        </div>
+    </nav>
+
+    <table class="table table-hover">
+        <thead class="sticky-top" style="top: 70px; z-index: 1000; border-block-end-width: 2px">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ISBN</th>
+                <th scope="col">Title</th>
+                <th scope="col">Author(s)</th>
+                <th scope="col">Publisher</th>
+            </tr>
+        </thead>
+        <tbody id="book-table-body">
+            @await Html.PartialAsync("_BookListPartial", Model)
+            <!-- Здесь будут подгружаться строки таблицы -->
+        </tbody>
+    </table>
+</div>
+
+<div id="loading" style="text-align:center; display:none;">Загрузка...</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/js/SkrollPage.js"></script>

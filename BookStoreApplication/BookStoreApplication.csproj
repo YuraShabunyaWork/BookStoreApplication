@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfases\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
