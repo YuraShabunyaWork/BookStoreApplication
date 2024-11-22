@@ -2,7 +2,7 @@
 using BookStoreApplication.Interfases;
 using BookStoreApplication.Models;
 using Microsoft.AspNetCore.Mvc;
-using static System.Reflection.Metadata.BlobBuilder;
+using System.Threading;
 
 namespace BookStoreApplication.Controlers
 {
@@ -40,6 +40,7 @@ namespace BookStoreApplication.Controlers
         [HttpGet]
         public IActionResult LoadBooks()
         {
+            Thread.Sleep(1000);
             var books = mahageBookStore.AddBooks(bookStore, 10, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review);
             return PartialView("_BookListPartial", books);
         }
@@ -47,7 +48,7 @@ namespace BookStoreApplication.Controlers
         [HttpGet]
         public IActionResult UpdateConfig(string language, int seed, int likes, double review)
         {
-            bookStore.Books.Clear();
+            bookStore.Books = new List<Book>();
             Randomizer.Seed = new Random(seed);
             bookStore.Faker = new Bogus.Faker(mahageBookStore.ConvertToShortLanguage(language));
             bookStore.ConfigBooks.Likes = likes;

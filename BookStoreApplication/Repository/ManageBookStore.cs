@@ -23,7 +23,7 @@ namespace BookStoreApplication.Repository
                 Description descriptions = new Description
                 {
                     Likes = bookStore.Random.Next(likes),
-                    Images = bookStore.Faker.Image.LoremFlickrUrl(240, 320, matchAllKeywords: true, keywords: wordArray[0].ToLower()),
+                    Images = bookStore.Faker.Image.LoremFlickrUrl(240, 320, matchAllKeywords: true, keywords: wordArray[0].Trim().ToLower()),
                     Reviews = new List<Review>()
                 };
                 book.Descriptions = descriptions;
