@@ -1,9 +1,9 @@
 ﻿@using BookStoreApplication.Models
 @model List<Book>
 
-<div class="container mt-1 bg-light">
-    <nav class="navbar d-flex justify-content-between sticky-top bg-light">
-        <div class="dropdown sticky-top" style="width: 18vw">
+<div class="container bg-light mt-1 px-4">
+    <nav class="navbar justify-content-between sticky-top bg-light w-100 ">
+        <div class="dropdown" style="width: 18vw">
             <button class="btn btn-light dropdown-toggle w-100 d-flex justify-content-between align-items-center bg-white"
                     type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="d-flex flex-column text-start">
@@ -47,13 +47,13 @@
         </div>
     </nav>
 
-    <table class="table table-hover">
+    <table class="table table-hover w-100">
         <thead class="sticky-top table-light" style="top: 77px; z-index: 1000; height:25px">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">ISBN</th>
-                <th scope="col">Title</th>
-                <th scope="col">Author(s)</th>
+                <th style="width: 5vw" scope="col">#</th>
+                <th style="width: 15vw" scope="col">ISBN</th>
+                <th style="width: 20vw" scope="col">Title</th>
+                <th style="width: 20vw" scope="col">Author(s)</th>
                 <th scope="col">Publisher</th>
             </tr>
         <tbody id="book-table-body">

@@ -4,10 +4,10 @@
 @foreach (var item in Model)
 {
     <tr data-bs-toggle="collapse" data-bs-target="#details-@item.Id" aria-expanded="false" aria-controls="details-@item.Id">
-        <th scope="row">@item.Id</th>
-        <td>@item.ISBN</td>
-        <td>@item.Title</td>
-        <td>@item.Author</td>
+        <th style="width: 5vw" scope="row">@item.Id</th>
+        <td style="width: 15vw">@item.ISBN</td>
+        <td style="width: 20vw">@item.Title</td>
+        <td style="width: 20vw">@item.Author</td>
         <td>@item.Publisher</td>
     </tr>
     <tr class="collapse" id="details-@item.Id">

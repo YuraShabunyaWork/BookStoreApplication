@@ -10,20 +10,20 @@ namespace BookStoreApplication.Repository
             List<Book> newBooks = new List<Book>();
             for (int i = 0; i < n; i++)
             {
-                var word = bookStore.Faker.Random.Words(2);
-                string[] wordArray = word.Split(' ');
+                string adjective = bookStore.Faker.Random.Word(); // Случайное слово
+                string noun = bookStore.Faker.Commerce.Product(); // Случайное имя продукта
                 Book book = new Book
                 {
                     Id = bookStore.Books.Count + 1,
                     ISBN = bookStore.Faker.Random.Replace("###-#-###-#####-#"),
                     Author = bookStore.Faker.Name.FullName(),
-                    Title = char.ToUpper(word[0]) + word.Substring(1),
+                    Title = $"{Capitalize(adjective)} {Capitalize(noun)}",
                     Publisher = bookStore.Faker.Company.CompanyName()
                 };
                 Description descriptions = new Description
                 {
                     Likes = bookStore.Random.Next(likes),
-                    Images = bookStore.Faker.Image.LoremFlickrUrl(240, 320, matchAllKeywords: true, keywords: wordArray[0].Trim().ToLower()),
+                    Images = bookStore.Faker.Image.LoremFlickrUrl(240, 320, matchAllKeywords: true, keywords: noun.Split(" ")[0].ToLower()),
                     Reviews = new List<Review>()
                 };
                 book.Descriptions = descriptions;
@@ -64,6 +64,10 @@ namespace BookStoreApplication.Repository
                 }
             }
         }
-
+        static string Capitalize(string word)
+        {
+            if (string.IsNullOrEmpty(word)) return word;
+            return char.ToUpper(word[0]) + word.Substring(1);
+        }
     }
 }
