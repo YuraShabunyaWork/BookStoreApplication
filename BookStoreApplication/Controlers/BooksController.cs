@@ -33,14 +33,15 @@ namespace BookStoreApplication.Controlers
         }
         public IActionResult Index()
         {
-            return View(bookStore.Books.Count == 0 ? mahageBookStore.AddBooks(bookStore, 20, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review) : bookStore.Books);
+            var books = bookStore.Books.Count == 0 ? mahageBookStore.AddBooks(bookStore, 20, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review) : bookStore.Books;
+            return View(books);
         }
 
-        // Метод для частичного представления
         [HttpGet]
         public IActionResult LoadBooks()
         {
-            return PartialView("_BookListPartial", mahageBookStore.AddBooks(bookStore, 10, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review));
+            var books = mahageBookStore.AddBooks(bookStore, 10, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review);
+            return PartialView("_BookListPartial", books);
         }
 
         [HttpGet]
@@ -52,7 +53,7 @@ namespace BookStoreApplication.Controlers
             bookStore.ConfigBooks.Likes = likes;
             bookStore.ConfigBooks.Review = review;
             var books = bookStore.Books.Count == 0 ? mahageBookStore.AddBooks(bookStore, 20, likes, review) : bookStore.Books;
-            return Json(new { success = true, books });
+            return PartialView("_BookListPartial", books);
         }
     }
 }

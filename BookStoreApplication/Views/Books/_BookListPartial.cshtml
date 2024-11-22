@@ -1,12 +1,50 @@
-﻿@model List<BookStoreApplication.Models.Book>
+﻿@using BookStoreApplication.Models
+@model List<Book>
 
 @foreach (var item in Model)
 {
-    <tr>
+    <tr data-bs-toggle="collapse" data-bs-target="#details-@item.Id" aria-expanded="false" aria-controls="details-@item.Id">
         <th scope="row">@item.Id</th>
         <td>@item.ISBN</td>
         <td>@item.Title</td>
         <td>@item.Author</td>
         <td>@item.Publisher</td>
+    </tr>
+    <tr class="collapse" id="details-@item.Id">
+        <td colspan="5">
+            <div class="p-3 row">
+                <div class="col-2">
+                    <div style="position: relative; height: 300px; width: 100%;">
+                        <img src="@item.Descriptions.Images" class="img-fluid" alt="Example Image" style="width: 100%; height: auto;" />
+                        <label class="fw-bold text-shadow position-absolute w-75"
+                               style="top: 10%; left: 50%; transform: translate(-50%, -50%); text-align: center; background: rgba(128, 128, 128, 0.8); padding: 1px;">
+                            @item.Author.ToUpper()
+                        </label>
+                        <h6 class="fw-bold text-shadow position-absolute w-100"
+                            style="top: 60%; left: 50%; transform: translateX(-50%); text-align: center;
+                                background: rgba(128, 128, 128, 0.8); padding: 10px;">
+                            @item.Title.ToUpper()
+                        </h6>
+                        <div class="container mt-4" style="width: 65px">
+                            <span class="badge bg-primary d-flex align-items-center">
+                                <span class="me-1">@item.Descriptions.Likes</span>
+                                <i class="fa-solid fa-thumbs-up"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <h4>@item.Title</h4>
+                    <h5 style="font-style:italic;">by @item.Author</h5>
+                    <label style="color:gray;">@item.Publisher</label>
+                    <h5>Review</h5>
+                    @foreach(var rev in item.Descriptions.Reviews)
+                    {
+                        <label>@rev.Text</label><br />
+                        <label style="color:gray;">-- @rev.Name</label><br />
+                    }
+                </div>
+            </div>
+        </td>
     </tr>
 }

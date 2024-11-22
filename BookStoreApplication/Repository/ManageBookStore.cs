@@ -1,5 +1,4 @@
-﻿using Bogus;
-using BookStoreApplication.Interfases;
+﻿using BookStoreApplication.Interfases;
 using BookStoreApplication.Models;
 
 namespace BookStoreApplication.Repository
@@ -11,24 +10,27 @@ namespace BookStoreApplication.Repository
             List<Book> newBooks = new List<Book>();
             for (int i = 0; i < n; i++)
             {
-                var word = bookStore.Faker.Lorem.Word();
+                var word = bookStore.Faker.Random.Words(2);
+                string[] wordArray = word.Split(' ');
                 Book book = new Book
                 {
                     Id = bookStore.Books.Count + 1,
                     ISBN = bookStore.Faker.Random.Replace("###-#-###-#####-#"),
                     Author = bookStore.Faker.Name.FullName(),
-                    Title = char.ToUpper(word[0]) + word.Substring(1) + " " + bookStore.Faker.Lorem.Word(),
+                    Title = char.ToUpper(word[0]) + word.Substring(1),
                     Publisher = bookStore.Faker.Company.CompanyName()
                 };
-
-                Description descriptions = new Description { 
-                    Likes = bookStore.Faker.Random.Number(likes), 
-                    Images = bookStore.Faker.Image.LoremFlickrUrl(keywords: book.Title + ", " + book.Author),
-                    Reviews = GenerateReviews(bookStore, n, reviewsPerBook)};
+                Description descriptions = new Description
+                {
+                    Likes = bookStore.Faker.Random.Number(likes),
+                    Images = bookStore.Faker.Image.LoremFlickrUrl(240, 320, matchAllKeywords: true, keywords: wordArray[0].ToLower()),
+                    Reviews = new List<Review>()
+                };
                 book.Descriptions = descriptions;
                 bookStore.Books.Add(book);
                 newBooks.Add(book);
             }
+            GenerateReviews(bookStore, n, reviewsPerBook);
             return newBooks;
         }
 
@@ -42,17 +44,26 @@ namespace BookStoreApplication.Repository
             }
         }
 
-        protected List<Review> GenerateReviews(BookStore bookStore, int numBooks, double reviewsPerBook)
+        protected void GenerateReviews(BookStore bookStore, int numBooks, double reviewsPerBook)
         {
-            List<Review> reviews = new List<Review>();
-            while (reviewsPerBook > 0)
+            double count = numBooks * reviewsPerBook;
+            while (count > 0)
             {
-                double randValue = bookStore.Random.NextDouble();
-                if (randValue > reviewsPerBook)
-                    reviews.Add(new Review { Name = bookStore.Faker.Name.FullName(), Text = bookStore.Faker.Rant.Review("Book") });
-                reviewsPerBook -= 1;
+                for (int i = bookStore.Books.Count - numBooks; i < bookStore.Books.Count; i++)
+                {
+                    double randValue = bookStore.Random.NextDouble();
+                    if (randValue > 0.5)
+                    {
+                        bookStore.Books[i].Descriptions.Reviews.Add(new Review
+                        {
+                            Name = bookStore.Faker.Name.FullName(),
+                            Text = bookStore.Faker.Rant.Review("Book " + bookStore.Books[i].Title)
+                        });
+                        count -= 1;
+                    }
+                }
             }
-            return reviews;
         }
+
     }
 }
