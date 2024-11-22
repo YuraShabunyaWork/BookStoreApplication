@@ -22,7 +22,7 @@ namespace BookStoreApplication.Repository
                 };
                 Description descriptions = new Description
                 {
-                    Likes = bookStore.Faker.Random.Number(likes),
+                    Likes = bookStore.Random.Next(likes),
                     Images = bookStore.Faker.Image.LoremFlickrUrl(240, 320, matchAllKeywords: true, keywords: wordArray[0].ToLower()),
                     Reviews = new List<Review>()
                 };
@@ -30,7 +30,7 @@ namespace BookStoreApplication.Repository
                 bookStore.Books.Add(book);
                 newBooks.Add(book);
             }
-            GenerateReviews(bookStore, n, reviewsPerBook);
+            GenerateReviews(bookStore, newBooks, n, reviewsPerBook);
             return newBooks;
         }
 
@@ -44,20 +44,20 @@ namespace BookStoreApplication.Repository
             }
         }
 
-        protected void GenerateReviews(BookStore bookStore, int numBooks, double reviewsPerBook)
+        protected void GenerateReviews(BookStore bookStore, List<Book> books, int numBooks, double reviewsPerBook)
         {
             double count = numBooks * reviewsPerBook;
             while (count > 0)
             {
-                for (int i = bookStore.Books.Count - numBooks; i < bookStore.Books.Count; i++)
+                for (int i = 0; i < books.Count; i++)
                 {
                     double randValue = bookStore.Random.NextDouble();
                     if (randValue > 0.5)
                     {
-                        bookStore.Books[i].Descriptions.Reviews.Add(new Review
+                        books[i].Descriptions.Reviews.Add(new Review
                         {
                             Name = bookStore.Faker.Name.FullName(),
-                            Text = bookStore.Faker.Rant.Review("Book " + bookStore.Books[i].Title)
+                            Text = bookStore.Faker.Rant.Review("Book " + books[i].Title)
                         });
                         count -= 1;
                     }

@@ -33,7 +33,7 @@ namespace BookStoreApplication.Controlers
         }
         public IActionResult Index()
         {
-            var books = bookStore.Books.Count == 0 ? mahageBookStore.AddBooks(bookStore, 20, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review) : bookStore.Books;
+            var books = bookStore.Books.Count < 20 ? mahageBookStore.AddBooks(bookStore, 20, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review) : bookStore.Books;
             return View(books);
         }
 
@@ -52,7 +52,7 @@ namespace BookStoreApplication.Controlers
             bookStore.Faker = new Bogus.Faker(mahageBookStore.ConvertToShortLanguage(language));
             bookStore.ConfigBooks.Likes = likes;
             bookStore.ConfigBooks.Review = review;
-            var books = bookStore.Books.Count == 0 ? mahageBookStore.AddBooks(bookStore, 20, likes, review) : bookStore.Books;
+            var books = bookStore.Books.Count < 20 ? mahageBookStore.AddBooks(bookStore, 20, likes, review) : bookStore.Books;
             return PartialView("_BookListPartial", books);
         }
     }
