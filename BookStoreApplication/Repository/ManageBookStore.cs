@@ -34,16 +34,6 @@ namespace BookStoreApplication.Repository
             return newBooks;
         }
 
-        public string ConvertToShortLanguage(string language)
-        {
-            switch (language)
-            {
-                case "Germany (DE)": return "de";
-                case "Français (FR)": return "fr";
-                default: return "en";
-            }
-        }
-
         protected void GenerateReviews(BookStore bookStore, List<Book> books, int numBooks, double reviewsPerBook)
         {
             double count = numBooks * reviewsPerBook;

@@ -4,8 +4,7 @@ using BookStoreApplication.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();
-builder.Services.AddSingleton(new BookStore() 
-    { Books = new List<Book>(), Faker = new Bogus.Faker("en")});
+builder.Services.AddSingleton<BookStoreService>();
 builder.Services.AddScoped<IManageBookStore, ManageBookStore>();
 
 var app = builder.Build();
