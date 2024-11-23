@@ -40,7 +40,6 @@ namespace BookStoreApplication.Controlers
         [HttpGet]
         public IActionResult LoadBooks()
         {
-            Thread.Sleep(1000);
             var books = mahageBookStore.AddBooks(bookStore, 10, bookStore.ConfigBooks.Likes, bookStore.ConfigBooks.Review);
             return PartialView("_BookListPartial", books);
         }
